@@ -1,0 +1,604 @@
+What do blurring an image, adding an
+echo to music, detecting edges in a
+photograph, and teaching artificial
+intelligence to recognize objects have
+in common? They all involve a
+surprisingly powerful mathematical
+operation. Convolution. At first,
+convolution looks intimidating. An
+integral stretching from negative
+infinity to positive infinity. A
+mysterious function that gets flipped,
+shifted, multiplied, and integrated. But
+here's the interesting part. Once you
+understand the geometry behind
+convolution, the formula starts to make
+sense. You'll discover that convolution
+is fundamentally about one simple
+question. How much does one function
+overlap with another as we move it
+across a signal? That single idea
+connects calculus, signal processing,
+image processing, differential
+equations, probability, and artificial
+intelligence. In this video, we're going
+to build convolution from scratch. We'll
+begin with a simple visual experiment.
+Then we'll derive the mathematical
+formula, understand why one function
+gets flipped, and see how convolution
+works with actual numbers. Finally,
+we'll explore why convolution is so
+important in modern technology. Let's
+begin. Imagine that you're measuring the
+intensity of a signal over time. For
+example, suppose a sensor detects a
+sudden burst of light. Before the burst,
+the intensity is zero. During the burst,
+the intensity becomes one. After the
+burst, it returns to zero. We can
+represent this using a mathematical
+function. Let's call it f of t. For
+simplicity, f of t equals 1 when t lies
+between 0 and 1 and zero everywhere
+else. This is called a rectangular
+pulse. It is one of the simplest signals
+we can study. Now imagine introducing
+another function. Let's call it g of t.
+This function acts like a moving window
+that examines different parts of the
+original signal. Think of f as the
+signal we have and g as the window that
+moves across it. As we move the window,
+the amount of overlap changes and that
+changing overlap will become our output.
+This is the central geometric intuition
+behind convolution. But how do we
+convert the amount of overlap into a
+mathematical function? To answer that,
+we need to understand a more fundamental
+idea. Multiplication. Suppose two
+functions are defined along the same
+horizontal axis. At every position, each
+function has a particular value. We can
+multiply those values together. If
+either function is zero, their product
+is zero. If both functions are positive,
+their product is positive. So the
+product tells us where both functions
+contribute simultaneously. Let's see
+what happens with our rectangular
+pulses. Suppose both functions have a
+height of one. Where they don't overlap,
+their product is zero. Where they
+overlap, their product is one. Now we
+have a new function, the product of the
+two functions. But this product still
+tells us what happens at individual
+positions. What if we want a single
+number representing the total overlap?
+We integrate. Integration adds up the
+contributions across the horizontal
+axis. For our rectangular pulses,
+integration simply measures the length
+of the overlapping interval. If the
+overlap has length zero, the integral is
+zero. If the overlap has length 1/2, the
+integral is 1/2. If the overlap has
+length one, the integral is one. This
+gives us an important principle.
+Multiply the functions point by point,
+then integrate the product. The result
+measures their combined contribution
+across the domain. But convolution
+introduces one additional ingredient
+movement. Instead of comparing two
+functions at just one fixed position, we
+move one function across the other. At
+every position, we calculate the overlap
+again that produces a new function and
+that function is the convolution. Let's
+make the idea visual. Our original
+signal remains fixed. A second function
+moves across it. Initially, the moving
+function is far away from the signal.
+There is no overlap. So the output is
+zero. Now the moving function begins
+entering the signal. The overlapping
+region becomes larger. The output
+increases. When the moving function
+completely covers the signal, the
+overlap reaches its maximum. The output
+becomes largest. Then the moving
+function starts leaving the signal. The
+overlap becomes smaller. The output
+decreases. Finally, the moving function
+moves completely beyond the signal. The
+overlap disappears and the output
+returns to zero. Notice something
+remarkable. Our original signal was a
+rectangular pulse, but the output has a
+different shape. The output was created
+entirely by moving a second function
+across the first. This is the basic
+behavior of convolution. It transforms
+two functions into a third function. We
+can represent this operation
+symbolically as f convolved with g. The
+asterisk represents convolution, not
+ordinary multiplication. Instead, f
+convolved with g describes the function
+produced by sliding one function across
+the other and calculating their combined
+contribution at every position. With
+different functions, we can produce
+entirely different outputs. A Gaussian
+window may smooth a signal. A specially
+designed kernel may emphasize rapid
+changes. Another kernel may reveal
+repeated patterns. The result depends on
+the shapes of the two functions. Now we
+understand the intuition. But
+mathematics has a detail that often
+confuses beginners. In the actual
+convolution formula, the moving function
+is reflected before it is shifted. Why?
+Let's derive the formula and investigate
+that question. The continuous
+convolution of two functions f and g is
+defined by the integral from negative
+infinity to positive infinity of f of
+toao multiplied by g of t minus toao
+with respect to toao. Let's understand
+every part of this expression. First we
+have f of toao. This represents the
+original function evaluated at a
+position called toao. The symbol toao is
+simply a variable of integration. We use
+it instead of t because t represents the
+location where we want to calculate the
+output. Next we have g of t minus toao.
+This is the moving function. Its
+argument contains t minus toao. That
+subtraction is essential. As we change
+t, the relative position of the two
+functions changes. Now we multiply f of
+toao by g of t minus toao. This
+calculates the product of the two
+functions at corresponding positions.
+Finally, we integrate over all values of
+toao. That adds together the
+contributions from the entire domain.
+The result is one number for each value
+of t. As t changes, that number changes
+too. Therefore, the output is itself a
+function of t. The integration limits
+extend from negative infinity to
+positive infinity. In practice, if the
+functions are zero outside a finite
+interval, we only need to integrate over
+the region where their product can be
+non zero. Now, let's address the
+question. Why do we see t minus toao
+instead of simply adding the variables
+together? The answer comes from the
+geometry of shifting a function.
+Consider a function that is not
+symmetric. Its left side looks different
+from its right side. Now reflected
+across the vertical axis. The left and
+right sides exchange positions. This is
+called reflection or time reversal. For
+a function g of t, its reflected version
+is g of negative t. Now shift the
+reflected function by an amount t. The
+result can be written as g of t minus
+toao. When viewed as a function of toao,
+as t changes, the reflected function
+moves across the original signal. At
+each position, we multiply the two
+functions and integrate. This is
+convolution. The reflection is not an
+accidental trick. It is part of the
+mathematical definition of convolution.
+Here's a subtle but important
+distinction. If we slide a function
+without reflecting it, we are
+calculating a correlation-like operation
+depending on the convention being used.
+If we reflect the function and then
+slide it, we obtain convolution. For
+symmetric functions such as a centered
+Gaussian, the reflection makes no
+visible difference because the function
+looks identical after flipping. But for
+asymmetric functions, the distinction
+matters. This is why the flip can seem
+invisible in some visual explanations.
+To really understand convolution,
+remember four conceptual steps. Flip,
+shift, multiply, integrate. Now let's
+work through an exact numerical example.
+Let's define two functions. Our first
+function f of t equals 1 when t lies
+between 0 and 1 and zero everywhere
+else. Our second function g of t is
+exactly the same. We want to calculate
+their convolution using the convolution
+formula. We multiply f of toao by g of t
+minus toao and integrate with respect to
+toao. Since both functions are
+rectangular pulses, their product is one
+wherever the two intervals overlap and
+zero everywhere else. So our problem
+becomes surprisingly simple. We need to
+find the length of the overlap between
+two intervals. Let's examine three
+cases. First, suppose t is less than
+zero. The two pulses do not overlap.
+Therefore, their product is zero
+everywhere. The integral is zero. So the
+convolution is zero whenever t is less
+than zero. Now consider the second case.
+Suppose t lies between 0 and 1. The
+pulses overlap partially. The overlap
+interval has length t. For example, when
+t equals 0.25,
+the overlap length is 0.25.
+When t= 0.6, the overlap length is 0.6.
+Therefore, the convolution output
+increases linearly. In this interval,
+the convolution equals t. Now consider
+the third case. Suppose t lies between 1
+and 2. The moving pulse gradually leaves
+the fixed pulse. The overlap length
+decreases. The overlap is 2 minus t.
+When t = 1, the overlap length is 1.
+When t= 1.5, the overlap length is 0.5.
+When t equals 2, the overlap disappears.
+Therefore, in this interval, the
+convolution equals 2 minus t. For t
+greater than 2, the pulses no longer
+overlap. The output returns to zero.
+Putting everything together, we obtain a
+peace-wise function. The convolution
+equals 0 before zero. It equals t
+between 0 and 1. It equals 2 minus t
+between 1 and 2 and it equals 0 after 2.
+Look at the result. We started with two
+rectangular functions. Their convolution
+is a triangular function. That triangle
+is not an approximation. It follows
+exactly from the definition. Two simple
+rectangular pulses combine to produce a
+new function that rises linearly and
+then falls linearly. This is one of the
+clearest examples of how convolution
+changes the shape of a signal. And
+notice something else. Each original
+pulse has a width of one. The resulting
+triangle extends from 0 to two. Its
+support has a width of two. Convolution
+combines the widths of the two intervals
+in this example. This behavior becomes
+useful when studying signals,
+probability distributions, and many
+other mathematical objects. But why does
+convolution appear in so many different
+fields? To answer that, we need to
+connect it to real systems. Imagine a
+physical system. You provide an input.
+The system responds with an output. For
+example, you clap in an empty room. The
+clap is the input. The room produces an
+echoing sound that fades over time. The
+output depends not only on the original
+clap, but also on the characteristics of
+the room. A large hall may produce a
+long reverberation. A small room with
+soundabsorbing walls may produce a much
+shorter response. Now imagine that we
+know how the room responds to a very
+short impulse. We call this response the
+impulse response. Let's denote it by h
+of t. For a linear time invariant
+system, the output y of t can be
+calculated by convolving the input x of
+t with the impulse response h of t. In
+other words, the output equals the
+integral of x of multiplied by h of t
+minus toao integrated over all values of
+toao. This is one of the most important
+applications of convolution. Why does it
+work? Imagine breaking a complicated
+input signal into many tiny impulses.
+Each impulse produces a scaled and
+shifted copy of the systems impulse
+response. Because the system is linear,
+we can add all these individual
+responses together. Convolution performs
+exactly that weighted addition. Every
+part of the input contributes to the
+output according to the systems
+response. This explains why convolution
+is so useful. Instead of solving the
+entire system from scratch for every
+possible input, we can characterize the
+system using its impulse response. Once
+we know that response, convolution lets
+us calculate the output for many
+different inputs. This principle is
+widely used in audio processing,
+electronics, communications, and control
+systems. But the same mathematical
+operation also appears in image
+processing. And there the moving window
+becomes a small matrix. An image is a
+two-dimensional grid of pixels. Each
+pixel stores information such as
+brightness or color. To process an
+image, we can use a small matrix called
+a kernel or filter. For example,
+consider a 3x3 averaging kernel. Every
+entry in this matrix has the value 1
+9th. Now place this kernel over a small
+region of the image. Multiply each pixel
+by the corresponding kernel weight. Add
+the nine products. The result becomes
+the new value of the pixel at the chosen
+output location. Then move the kernel to
+the next position. Repeat the process
+across the image. This is a discrete
+two-dimensional convolution-like
+filtering operation. There is a
+technical detail worth knowing. In many
+image processing libraries and
+convolutional neural network
+implementations, the operation called
+convolution is actually crossorrelation.
+The kernel is applied without flipping
+it. For symmetric kernels such as the
+averaging kernel we just used, flipping
+makes no difference. For asymmetric
+kernels, the distinction matters. Now,
+what does this averaging kernel
+accomplish? It replaces each pixel with
+a local weighted average. Large
+differences between neighboring pixels
+tend to become smaller. The image
+becomes smoother. Fine details may
+disappear. Noise may be reduced. The
+result is a blur. But we can do much
+more than blur an image. Consider a
+kernel that compares pixel values on the
+left with pixel values on the right.
+Such a kernel can respond strongly to
+changes across the image and highlight
+vertical edges. A different kernel can
+detect horizontal edges. Other kernels
+can sharpen an image, emphasize
+textures, or identify specific local
+patterns. The principle is the same.
+Choose a kernel, slide it across the
+image, multiply corresponding values,
+add the results, repeat. A tiny matrix
+can transform an entire image. And this
+brings us to one of the most important
+applications of convolution in modern
+artificial intelligence. How can a
+computer recognize a cat in a
+photograph? The image may contain
+millions of visual details. There may be
+different backgrounds, lighting
+conditions, camera angles, and colors. A
+convolutional neural network or CNN
+processes the image using learned
+filters. At the beginning of training,
+the network's filters may contain
+relatively unhelpful values. During
+training, the network adjusts these
+weights to reduce its prediction errors.
+Over time, different filters can become
+sensitive to useful visual patterns.
+Some filters may respond strongly to
+simple edges. Others may respond to
+textures or combinations of lines.
+Deeper layers can combine information
+into more complex patterns. For example,
+imagine that one filter responds
+strongly to a diagonal edge. Another
+responds to a curved boundary. Another
+responds to a repeated texture. When
+these filters are applied across the
+image, they create feature maps. A
+feature map tells the network where a
+particular pattern appears and how
+strongly the filter responds. Later
+layers combine these representations to
+help distinguish objects. The important
+idea is that the same learned filter can
+be applied at many different positions.
+The network does not need a completely
+separate set of parameters for every
+pixel location. This sharing of weights
+makes convolutional layers efficient and
+helps them detect patterns wherever they
+appear in an image. However, convolution
+alone does not make a neural network
+intelligent. CNNs also use other
+components such as nonlinear activation
+functions, pooling or strided
+operations, normalization, and final
+prediction layers. And modern artificial
+intelligence architectures do not all
+rely on convolution. Transformers, for
+example, use attention mechanisms as a
+central component. Still, convolution
+remains an important building block in
+computer vision and many other machine
+learning applications. The remarkable
+connection is this. The operation we
+first understood by sliding a simple
+window over a graph can also help a
+computer identify patterns in complex
+images. Now, let's explore another
+surprising connection, convolution and
+probability. Suppose you roll two fair
+six-sided dice. What is the probability
+that their sum equals 7? You could list
+every possible pair of outcomes. But
+convolution gives us a systematic way to
+calculate the distribution of the sum of
+two independent random variables. Let's
+call the first die x and the second die
+y. Each die has a probability
+distribution. The probability of each
+outcome from 1 to 6 is 16th. Now we want
+the distribution of x + y. To obtain a
+particular sum, we consider every pair
+of outcomes that produces it. For
+example, a sum of seven can occur
+through 1 + 6, 2 + 5, 3 + 4, 4 + 3, 5 +
+2, and 6 + 1. There are six such
+combinations. Each ordered pair has
+probability 136th. Therefore, the
+probability of a sum of 7 is 6 / 36.
+that simplifies to 16th. Convolution
+generalizes this calculation for
+discrete random variables. If X and Y
+are independent and have probability
+mass functions P and Q, then the
+probability that their sum equals N is
+the sum of P of K multiplied by Q of N
+minus K over all possible values of K.
+That is the discrete convolution of
+their probability distributions. For
+continuous independent random variables
+with suitable probability densities, the
+density of their sum is given by the
+continuous convolution of those
+densities. This connection appears in
+probability theory, statistics, random
+processes, and many other areas. The
+same operation that combines signals
+also combines probability distributions.
+Why? Because in both cases we consider
+all possible ways that contributions can
+combine to produce a particular output.
+Convolution is not tied to one
+particular application. It is a general
+mathematical way of combining
+information across possible positions or
+values. So far we have focused mainly on
+continuous functions. But computers
+usually work with finite arrays of
+numbers. For two discrete sequences,
+convolution can be written as a sum of f
+of k multiplied by g of n minus k over
+all integer values of k. This is the
+discrete counterpart of the continuous
+convolution integral. Instead of
+integrating over every real value of
+toao, we add contributions over integer
+indices. Let's use a simple example.
+Suppose our input sequence is 1 2 1 and
+our kernel is 1 one. Using the full
+discrete convolution, we obtain 1 33 31.
+Let's verify the result. The first
+output is 1 multiplied by 1 giving 1.
+The second output combines 2 * 1 and 1
+multiplied by 1 giving three. The third
+output combines 1 multiplied by 1 and 2
+* 1 giving three. The final output is 1
+multiplied by 1 giving 1. So the result
+is 1 3 3 1. Notice that the output is
+longer than either original sequence.
+Four finite sequences of lengths m and
+n. The full discrete convolution has
+length m plus n minus one. Assuming both
+sequences are non-mpy. The exact output
+length depends on the convention used
+for padding stride and whether we
+calculate the full valid or same-sized
+output. This is why convolution in
+programming libraries sometimes appears
+slightly different from the mathematical
+definition. The underlying principle,
+however, remains the same. Multiply
+corresponding values and add the
+contributions. Now, let's step back and
+see what we've discovered. In the
+beginning, convolutions seemed like a
+complicated integral, but we build it
+from a much simpler idea. Take two
+functions. Reflect one of them. Shift it
+across the other. Multiply their values
+at corresponding positions. Integrate to
+combine all the contributions. Repeat
+for every output position. That is
+continuous convolution. In image
+processing, the same basic idea becomes
+a moving kernel over a grid of pixels.
+In audio processing, it helps model the
+effect of a system on an input signal.
+In artificial intelligence, learned
+filters detect useful patterns in
+images. In probability, convolution
+calculates the distribution of sums of
+independent random variables. And in
+differential equations, convolution can
+help express solutions of certain linear
+systems and equations. Different
+problems, different interpretations, one
+mathematical operation. There is also a
+useful way to remember why convolution
+matters. Many real world systems have
+memory. The output at a particular
+moment can depend on inputs from earlier
+moments. Convolution provides a way to
+combine those past inputs with the
+systems response. It tells us how
+contributions from different positions
+combine to produce a final result. And
+that is the deeper idea behind the
+mathematics. Let's finish by bringing
+everything together. Convolution is more
+than a formula. It is a way of
+understanding how two functions combine
+to produce a third. And once you
+understand the visual intuition, the
+mathematics becomes much less
+mysterious. Remember the four main
+steps. Flip, shift, multiply, integrate.
+For continuous functions, we integrate
+the product across the domain. For
+discrete sequences, we add the products.
+For images, a kernel moves across a grid
+of pixels. For signals, convolution can
+describe how a system responds to an
+input. For probability distributions, it
+helps us calculate the possible sums of
+independent random variables. The
+applications may look completely
+different, but the mathematical
+structure is closely related. And that's
+what makes convolution such a powerful
+concept. It connects abstract
+mathematics with the technology we use
+every day. The next time you see an
+image being blurred, an audio signal
+being processed, or an artificial
+intelligence system recognizing a
+pattern, remember the operation behind
+many of these transformations.
+Convolution, a simple idea with an
+extraordinary range of applications. If
+this explanation helped you understand
+convolution, subscribe to MathSpark 8
+for more visual explanations of
+mathematics. And tell me in the comments
+which mathematical concept should we
+visualize next. Because mathematics
+becomes much more powerful when we don't
+just memorize the formulas. We
+understand why they
